@@ -1,0 +1,50 @@
+.booklist-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .booklist-title {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .booklist {
+    list-style: none;
+    padding: 0;
+    text-align: center;
+  }
+  
+  .booklist li {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .booklist li p {
+    margin: 5px 0;
+  }
+
+  .maintitle{
+    font-weight: bolder;
+  }
+
+  .btn-edit{
+    color: black;
+    margin-right: 20px;
+  }
+  
+  .never{
+    font-size: 12px;
+    color: red;
+    margin-left:-20px ;
+    
+  }
+  @media (max-width: 768px) {
+    .booklist-container {
+      max-width: 100%;
+      padding: 10px;
+    }
+  }
+  
