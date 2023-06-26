@@ -1,13 +1,15 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import axios from "axios";
 import './Login.css';
+import Navbar from "../../HomePage/Navbar/Navbar";
+
 function Login() {
   const errRef = useRef();
   const emailRef = useRef();
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [errMsg, setErrMsg] = useState("");
-  const [success, setSuccess] = useState(false);
+  const [setSuccess] = useState(false);
   const [validEmail, setValidEmail] = useState(false);
   const [validPwd, setValidPwd] = useState(false);
 
@@ -88,6 +90,7 @@ function Login() {
 
   return (
     <>
+    <Navbar />
       <section>
         <p
           ref={errRef}

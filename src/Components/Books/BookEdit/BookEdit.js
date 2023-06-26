@@ -2,6 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import "./BookEdit.css";
+import Navbar from "../../HomePage/Navbar/Navbar";
+
+
 
 const BookEdit = () => {
   const { bookId } = useParams();
@@ -95,6 +98,8 @@ const BookEdit = () => {
 
 
   return (
+    <>
+    <Navbar />
     <div className="container">
       <div>
         {books.length > 0 ? (
@@ -215,6 +220,8 @@ const BookEdit = () => {
         </form>
       </div>
     </div>
+
+    </>
   );
 };
 

@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import { Link } from 'react-router-dom';
 import "./Booklist.css";
+import Navbar from "../../HomePage/Navbar/Navbar";
 
 function Booklist() {
   const [books, setBooks] = useState([]);
@@ -24,6 +25,8 @@ function Booklist() {
   }, []);
 
   return (
+    <>
+    <Navbar />
     <div className="booklist-container">
       <h1 className="booklist-title">Docpert Book App</h1>
       <h2 className="booklist-title">Our Books, Our Library</h2>
@@ -64,6 +67,7 @@ function Booklist() {
         </ul>
       )}
     </div>
+    </>
   );
 }
 

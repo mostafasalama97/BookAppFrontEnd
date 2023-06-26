@@ -1,0 +1,33 @@
+
+.tab {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .tab a {
+    margin-bottom: 10px;
+    padding: 10px;
+    color: #000;
+    text-decoration: none;
+  }
+  
+  .tab a.active {
+    font-weight: bold;
+  }
+  
+  h2{
+    margin-top: 20px;
+    text-align: center;  }
+  /* Responsive design */
+  @media (min-width: 768px) {
+    .tab {
+      flex-direction: row;
+      justify-content: center;
+    }
+    
+    .tab a {
+      margin: 0 10px;
+    }
+  }
+  

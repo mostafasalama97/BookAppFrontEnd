@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import axios from "axios";
 import './Register.css';
+import Navbar from "../../HomePage/Navbar/Navbar";
+
 function Register() {
   const errRef = useRef();
   const userRef = useRef();
@@ -9,7 +11,7 @@ function Register() {
   const [confirm_password, setconfirm_password] = useState("");
   const [email, setEmail] = useState("");
   const [errMsg, setErrMsg] = useState("");
-  const [success, setSuccess] = useState(false);
+  const [setSuccess] = useState(false);
   const [validName, setValidName] = useState(false);
   const [validEmail, setValidEmail] = useState(false);
   const [userFocus, setUserFocus] = useState(false);
@@ -101,6 +103,7 @@ function Register() {
 
   return (
     <>
+    <Navbar />
       <section>
         <p
           ref={errRef}
