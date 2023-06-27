@@ -11,7 +11,7 @@ function Register() {
   const [confirm_password, setconfirm_password] = useState("");
   const [email, setEmail] = useState("");
   const [errMsg, setErrMsg] = useState("");
-  const [setSuccess] = useState(false);
+  const [success , setSuccess] = useState(false);
   const [validName, setValidName] = useState(false);
   const [validEmail, setValidEmail] = useState(false);
   const [userFocus, setUserFocus] = useState(false);

@@ -9,7 +9,7 @@ function Login() {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [errMsg, setErrMsg] = useState("");
-  const [setSuccess] = useState(false);
+  const [Success , setSuccess] = useState(false);
   const [validEmail, setValidEmail] = useState(false);
   const [validPwd, setValidPwd] = useState(false);
 
@@ -48,14 +48,6 @@ function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // const v1 = USER_REGEX.test(username);
-    // const v2 = PWD_REGEX.test(password);
-    // if (!v1 || !v2) {
-    //     console.log("why")
-    //   setErrMsg("Invalid Entry");
-    //   return;
-    // }
-
     try {
       const response = await axios.post(
         "http://localhost:8000/book/api/login/",
@@ -70,7 +62,10 @@ function Login() {
   
       // Store the token in local storage
       localStorage.setItem("jwtToken", token);
-  
+  // Include the token in the Authorization header of subsequent requests
+  axios.defaults.headers.common["Authorization"] = `JWT ${token}`;
+
+    
       setSuccess(true);
       // Clear state and controlled inputs
       setPassword("");
@@ -151,3 +146,27 @@ function Login() {
 
 
 export default Login;
+
+
+
+
+// const handleSubmit = async (e) => {
+//   e.preventDefault();
+//   try {
+//     const response = await axios.post(
+//       "http://localhost:8000/book/api/login/",
+//       JSON.stringify({ email, password }),
+//       {
+//         headers: { "Content-Type": "application/json" },
+//       }
+//     );
+
+//     const token = response.data.token;
+//     // Store the token in local storage
+//     localStorage.setItem("jwtToken", token);
+//     // Include the token in the Authorization header of subsequent requests
+//     axios.defaults.headers.common["Authorization"] = `JWT ${token}`;
+
+//     setSuccess(true);
+//     setPassword("");
+//     setEmail("");
