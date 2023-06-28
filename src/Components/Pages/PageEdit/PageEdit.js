@@ -1,25 +1,34 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import "./PageEdit.css";
+import "./BookEdit.css";
+import Navbar from "../../HomePage/Navbar/Navbar";
 
 const PageEdit = () => {
-  const { PageId } = useParams();
-  const [Pages, setPages] = useState([]);
-  const [sucess, setsuccess] = useState("");
-  const [formData, setFormData] = useState({
-    author: "",
-    title: "",
-    description: "",
-    published_date: new Date(),
+  const { pageId } = useParams();
+  const [page, setPages] = useState([]);
+  const [success, setSuccess] = useState("");
+  const [delSuccess, setDelSuccess] = useState("");
+  const [PageData, setPageData] = useState({
+    page_number: "",
+    content: "",
   });
 
   useEffect(() => {
+    const token = localStorage.getItem("jwtToken");
+    if (!token) {
+      console.error("JWT token is missing.");
+      return;
+    }
+    const headers = {
+      Authorization: `JWT ${token}`,
+      "Content-Type": "application/json",
+    };
     axios
-      .get(`http://localhost:8000/Page/api/Pages/2/`)
+      .get(`http://localhost:8000/book/api/pages/${pageId}/`, { headers })
       .then((response) => {
         setPages(response.data);
-        setFormData({
+        setPageData({
           author: response.data.author,
           title: response.data.title,
           description: response.data.description,
@@ -29,98 +38,116 @@ const PageEdit = () => {
       .catch((error) => {
         console.error(error);
       });
-  }, [PageId]);
+  }, [pageId]);
 
   const handleChange = (event) => {
-    setFormData({ ...formData, [event.target.name]: event.target.value });
+    setPageData({ ...PageData, [event.target.name]: event.target.value });
   };
-
   const handleSubmit = (event) => {
     event.preventDefault();
+
+    const token = localStorage.getItem("jwtToken");
+
+    if (!token) {
+      console.error("JWT token is missing.");
+      return;
+    }
+
+    const headers = {
+      Authorization: `JWT ${token}`,
+      "Content-Type": "application/json",
+    };
+
     axios
-      .put(`http://localhost:8000/Page/api/Pages/2/`, formData)
+      .put(`http://localhost:8000/book/api/pages/${pageId}/`, PageData, {
+        headers,
+      })
       .then((response) => {
         console.log("Page updated successfully!");
-        setsuccess("updated successfully!");
+        setSuccess("Updated successfully!");
       })
       .catch((error) => {
         console.error(error);
-        setsuccess("updated failed!");
+        setSuccess("Update failed!");
+      });
+  };
+  const handleDeleteBtn = (event) => {
+    event.preventDefault();
+
+    const token = localStorage.getItem("jwtToken");
+
+    if (!token) {
+      console.error("JWT token is missing.");
+      return;
+    }
+
+    const headers = {
+      Authorization: `JWT ${token}`,
+      "Content-Type": "application/json",
+    };
+
+    axios
+      .delete(`http://localhost:8000/book/api/pages/${pageId}/`, { headers })
+      .then((response) => {
+        console.log("page deleted successfully!");
+        setDelSuccess("Deleted successfully!");
+      })
+      .catch((error) => {
+        console.error(error);
+        setDelSuccess("Deletion failed!");
       });
   };
 
   return (
-    <div className="container">
-      <div>
-        {Pages.length > 0 ? (
-          <ul>
-            {Pages.map((Page) => (
-              <li key={Page.id}>
-                <p>
-                  <span className="maintitle">Title</span>: {Page.title}
-                </p>
-                <p>
-                  <span className="maintitle">Author</span>: {Page.author}
-                </p>
-                <p>
-                  <span className="maintitle">Description</span>:{" "}
-                  {Page.description}
-                </p>
-                <p>
-                  <span className="maintitle">Publication Date</span>:{" "}
-                  {Page.publication_date}
-                </p>
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p>Loading...</p>
-        )}
-        <h1>Edit Page</h1>
-        <form onSubmit={handleSubmit}>
+    <>
+      <Navbar />
+      <div className="container">
+        <h2>Edit Page where ID = {pageId}</h2>
+        <form>
+          <h3>Edit Page</h3>
           <div>
-            <label>Author:</label>
+            <label htmlFor="PageNumber">Page Number</label>
             <input
-              type="text"
-              name="author"
-              value={formData.author}
-              onChange={handleChange}
+               type="number"
+               name="page_number"
+               value={PageData.page_number}
+               onChange={handleChange}
+               required
             />
           </div>
           <div>
-            <label>Title:</label>
+            <label htmlFor="description">Content</label>
             <input
-              type="text"
-              name="title"
-              value={formData.title}
-              onChange={handleChange}
+             type="text"
+             rows={3}
+             name="content"
+             value={PageData.content}
+             onChange={handleChange}
+             required
             />
           </div>
-          <div>
-            <label>Description:</label>
-            <input
-              type="text"
-              name="description"
-              value={formData.description}
-              onChange={handleChange}
-            />
-          </div>
-          <div>
-            <label>published_date:</label>
-            <input
-              type="text"
-              name="published_date"
-              value={formData.published_date}
-              onChange={handleChange}
-            />
-          </div>
-          <div>
-            <button type="submit">Save</button>
-            <p>{sucess}</p>
-          </div>
+          <button
+            type="submit"
+            className="btn btn-primary"
+            onClick={handleSubmit}
+          >
+            Update
+          </button>
+          {success && <p>{success}</p>}
+        </form>
+        <form className="form-control">
+          <h3>Delete Page</h3>
+          <button
+            type="submit"
+            className="btn btn-primary"
+            onClick={handleDeleteBtn}
+          >
+            Delete
+          </button>
+          {delSuccess && <p>{delSuccess}</p>}
         </form>
       </div>
-    </div>
+    </>
   );
 };
 

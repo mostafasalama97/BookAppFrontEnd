@@ -267,7 +267,7 @@ const BookEdit = () => {
     };
     // console.log("Headers:", headers); // Check headers
     axios
-      .get(`http://localhost:8000/book/api/books/5/`, { headers })
+      .get(`http://localhost:8000/book/api/books/${bookId}/`, { headers })
       .then((response) => {
         setBooks(response.data);
         setFormData({
@@ -280,15 +280,15 @@ const BookEdit = () => {
       .catch((error) => {
         console.error(error);
       });
-  }, []);
+  }, [bookId]);
 
   const handleChange = (event) => {
     setFormData({ ...formData, [event.target.name]: event.target.value });
   };
 
-  const handleCreate = (event) => {
-    setFormDataCreate({ ...formDataCreate, [event.target.name]: event.target.value });
-  };
+  // const handleCreate = (event) => {
+  //   setFormDataCreate({ ...formDataCreate, [event.target.name]: event.target.value });
+  // };
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -306,7 +306,7 @@ const BookEdit = () => {
     };
 
     axios
-      .put(`http://localhost:8000/book/api/books/5/`, formData, { headers })
+      .put(`http://localhost:8000/book/api/books/${bookId}/`, formData, { headers })
       .then((response) => {
         console.log("Book updated successfully!");
         setSuccess("Updated successfully!");
@@ -361,7 +361,7 @@ const BookEdit = () => {
     };
 
     axios
-      .delete(`http://localhost:8000/book/api/books/5/`, { headers })
+      .delete(`http://localhost:8000/book/api/books/${bookId}/`, { headers })
       .then((response) => {
         console.log("Book deleted successfully!");
         setDelSuccess("Deleted successfully!");
@@ -376,30 +376,7 @@ const BookEdit = () => {
     <>
       <Navbar />
       <div className="container">
-        <div>
-          {books.length > 0 ? (
-            <ul>
-              {books.map((book) => (
-                <li key={book.id}>
-                  <p>
-                    <span className="maintitle">Title</span>: {book.title}
-                  </p>
-                  <p>
-                    <span className="maintitle">Author</span>: {book.author}
-                  </p>
-                  <p>
-                    <span className="maintitle">Description</span>: {book.description}
-                  </p>
-                  <p>
-                    <span className="maintitle">Published Date</span>: {book.published_date}
-                  </p>
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p>Loading...</p>
-          )}
-        </div>
+        <h2>Edit Book where ID =  {bookId}</h2>
         <form className="form-control">
           <h3>Edit Book</h3>
           <div className="form-group">
