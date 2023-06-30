@@ -1,50 +1,56 @@
-.Pagelist-container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-  }
-  
-  .Pagelist-title {
-    text-align: center;
-    font-size: 24px;
-    margin-bottom: 20px;
-  }
-  
-  .Pagelist {
-    list-style: none;
-    padding: 0;
-    text-align: center;
-  }
-  
-  .Pagelist li {
-    border: 1px solid #ccc;
+.page-list-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+h1 {
+  font-size: 28px;
+  font-weight: bold;
+}
+
+h2 {
+  font-size: 20px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+li {
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  padding: 20px;
+}
+
+li p {
+  margin: 0;
+  line-height: 1.5;
+}
+
+.btn-edit {
+  margin-top: 10px;
+}
+
+@media (max-width: 768px) {
+  .page-list-container {
     padding: 10px;
+  }
+  
+  h1 {
+    font-size: 24px;
+  }
+  
+  h2 {
+    font-size: 18px;
+    margin-top: 5px;
     margin-bottom: 10px;
   }
   
-  .Pagelist li p {
-    margin: 5px 0;
+  li {
+    padding: 10px;
   }
-
-  .maintitle{
-    font-weight: bolder;
-  }
-
-  .btn-edit{
-    color: black;
-    margin-right: 20px;
-  }
-  
-  .never{
-    font-size: 12px;
-    color: red;
-    margin-left:-20px ;
-    
-  }
-  @media (max-width: 768px) {
-    .Pagelist-container {
-      max-width: 100%;
-      padding: 10px;
-    }
-  }
-  
+}

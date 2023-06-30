@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import "./BookEdit.css";
+import "./PageEdit.css";
 import Navbar from "../../HomePage/Navbar/Navbar";
 
 const PageEdit = () => {
@@ -12,6 +12,7 @@ const PageEdit = () => {
   const [PageData, setPageData] = useState({
     page_number: "",
     content: "",
+    book:""
   });
 
   useEffect(() => {
@@ -29,10 +30,9 @@ const PageEdit = () => {
       .then((response) => {
         setPages(response.data);
         setPageData({
-          author: response.data.author,
-          title: response.data.title,
-          description: response.data.description,
-          published_date: new Date(response.data.published_date),
+          page_number: response.data.page_number,
+          content: response.data.content,
+          book: response.data.book,
         });
       })
       .catch((error) => {
@@ -43,7 +43,9 @@ const PageEdit = () => {
   const handleChange = (event) => {
     setPageData({ ...PageData, [event.target.name]: event.target.value });
   };
+
   const handleSubmit = (event) => {
+    console.log(event.target.value)
     event.preventDefault();
 
     const token = localStorage.getItem("jwtToken");
@@ -71,6 +73,7 @@ const PageEdit = () => {
         setSuccess("Update failed!");
       });
   };
+
   const handleDeleteBtn = (event) => {
     event.preventDefault();
 
@@ -89,7 +92,7 @@ const PageEdit = () => {
     axios
       .delete(`http://localhost:8000/book/api/pages/${pageId}/`, { headers })
       .then((response) => {
-        console.log("page deleted successfully!");
+        console.log("Page deleted successfully!");
         setDelSuccess("Deleted successfully!");
       })
       .catch((error) => {
@@ -105,25 +108,38 @@ const PageEdit = () => {
         <h2>Edit Page where ID = {pageId}</h2>
         <form>
           <h3>Edit Page</h3>
-          <div>
+          <div className="form-group">
             <label htmlFor="PageNumber">Page Number</label>
             <input
-               type="number"
-               name="page_number"
-               value={PageData.page_number}
-               onChange={handleChange}
-               required
+              type="number"
+              className="form-control"
+              name="page_number"
+              value={PageData.page_number}
+              onChange={handleChange}
+              required
             />
           </div>
-          <div>
+          <div className="form-group">
             <label htmlFor="description">Content</label>
-            <input
-             type="text"
-             rows={3}
-             name="content"
-             value={PageData.content}
-             onChange={handleChange}
-             required
+            <textarea
+              className="form-control"
+              rows={3}
+              name="content"
+              value={PageData.content}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="description">Book</label>
+            <textarea
+              className="form-control"
+              rows={3}
+              name="content"
+              value={PageData.book}
+              onChange={handleChange}
+              required
+              disabled
             />
           </div>
           <button
